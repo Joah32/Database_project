@@ -16,39 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `pantry`
+-- Table structure for table `Batch`
 --
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `pantry` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-
-USE `pantry`;
-
---
--- Table structure for table `Bake`
---
-
-DROP TABLE IF EXISTS `Bake`;
+DROP TABLE IF EXISTS `Batch`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Bake` (
+CREATE TABLE `Batch` (
   `recipe_id` int unsigned NOT NULL,
-  `bake_number` int unsigned NOT NULL,
-  `bake_date` date NOT NULL,
+  `batch_number` int unsigned NOT NULL,
+  `batch_date` date NOT NULL,
   `scale_factor` decimal(4,2) NOT NULL DEFAULT '1.00',
   `outcome` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`recipe_id`,`bake_number`),
-  CONSTRAINT `fk_bake_recipe` FOREIGN KEY (`recipe_id`) REFERENCES `Recipe` (`recipe_id`) ON DELETE CASCADE
+  PRIMARY KEY (`recipe_id`,`batch_number`),
+  CONSTRAINT `fk_batch_recipe` FOREIGN KEY (`recipe_id`) REFERENCES `Recipe` (`recipe_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Bake`
+-- Dumping data for table `Batch`
 --
 
-LOCK TABLES `Bake` WRITE;
-/*!40000 ALTER TABLE `Bake` DISABLE KEYS */;
-INSERT INTO `Bake` VALUES (1,1,'2026-08-02',1.00,'Good spread, slightly overbaked at 12 minutes'),(1,2,'2026-08-16',2.00,'Double batch, needed a second pan, even bake'),(2,1,'2026-08-23',1.00,'Dense crumb, proofed too short'),(2,2,'2026-09-06',1.00,'Good rise and crust'),(3,1,'2026-09-13',0.50,'Half batch in a small loaf pan, moist');
-/*!40000 ALTER TABLE `Bake` ENABLE KEYS */;
+LOCK TABLES `Batch` WRITE;
+/*!40000 ALTER TABLE `Batch` DISABLE KEYS */;
+INSERT INTO `Batch` VALUES (1,1,'2026-08-02',1.00,'Good spread, slightly overbaked at 12 minutes'),(1,2,'2026-08-16',2.00,'Double batch, needed a second pan, even bake'),(2,1,'2026-08-23',1.00,'Dense crumb, proofed too short'),(2,2,'2026-09-06',1.00,'Good rise and crust'),(3,1,'2026-09-13',0.50,'Half batch in a small loaf pan, moist');
+/*!40000 ALTER TABLE `Batch` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -143,13 +135,16 @@ DROP TABLE IF EXISTS `Recipe`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Recipe` (
   `recipe_id` int unsigned NOT NULL AUTO_INCREMENT,
+  `equipment_id` int unsigned NOT NULL,
   `name` varchar(100) NOT NULL,
   `recipe_category` varchar(50) NOT NULL,
   `prep_time_min` smallint unsigned NOT NULL,
   `bake_time_min` smallint unsigned NOT NULL,
   `bake_temp_F` smallint unsigned NOT NULL,
   PRIMARY KEY (`recipe_id`),
-  UNIQUE KEY `uq_recipe_name` (`name`)
+  UNIQUE KEY `uq_recipe_name` (`name`),
+  KEY `fk_recipe_equipment` (`equipment_id`),
+  CONSTRAINT `fk_recipe_equipment` FOREIGN KEY (`equipment_id`) REFERENCES `Equipment` (`equipment_id`) ON DELETE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -159,35 +154,8 @@ CREATE TABLE `Recipe` (
 
 LOCK TABLES `Recipe` WRITE;
 /*!40000 ALTER TABLE `Recipe` DISABLE KEYS */;
-INSERT INTO `Recipe` VALUES (1,'Chocolate chip cookies','cookie',20,11,375),(2,'Sandwich bread','bread',30,35,375),(3,'Vanilla pound cake','cake',25,60,325);
+INSERT INTO `Recipe` VALUES (1,1,'Chocolate chip cookies','cookie',20,11,375),(2,2,'Sandwich bread','bread',30,35,375),(3,2,'Vanilla pound cake','cake',25,60,325);
 /*!40000 ALTER TABLE `Recipe` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `RecipeEquipment`
---
-
-DROP TABLE IF EXISTS `RecipeEquipment`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `RecipeEquipment` (
-  `recipe_id` int unsigned NOT NULL,
-  `equipment_id` int unsigned NOT NULL,
-  PRIMARY KEY (`recipe_id`,`equipment_id`),
-  KEY `fk_re_equipment` (`equipment_id`),
-  CONSTRAINT `fk_re_equipment` FOREIGN KEY (`equipment_id`) REFERENCES `Equipment` (`equipment_id`) ON DELETE RESTRICT,
-  CONSTRAINT `fk_re_recipe` FOREIGN KEY (`recipe_id`) REFERENCES `Recipe` (`recipe_id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `RecipeEquipment`
---
-
-LOCK TABLES `RecipeEquipment` WRITE;
-/*!40000 ALTER TABLE `RecipeEquipment` DISABLE KEYS */;
-INSERT INTO `RecipeEquipment` VALUES (1,1),(2,2),(3,2),(1,3),(2,3),(3,3),(1,4),(2,4),(3,4),(1,5),(2,5),(3,5);
-/*!40000 ALTER TABLE `RecipeEquipment` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -227,4 +195,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-09-29 17:17:35
+-- Dump completed on 2026-10-04 17:55:11
