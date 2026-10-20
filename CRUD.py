@@ -5,7 +5,7 @@ from mysql.connector import errorcode
 
 TABLE = "Ingredient"
 def getConnection():
-    with open("secrets.json", "r") as secretFile:
+    with open(".secrets.json", "r") as secretFile:
         creds = json.load(secretFile)["mysqlCredentials"]
     return mysql.connector.connect(**creds)
 
