@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe Database - Recipe Table</title>
+    <style>
+        body { font-family: sans-serif; margin: 2em; }
+        table { border-collapse: collapse; }
+        caption { font-weight: bold; padding: 0.5em; }
+        th, td { border: 1px solid #555; padding: 0.4em 0.8em; }
+        th { background: #ddd; }
+        tbody tr:nth-child(even) { background: #f3f3f3; }
+        td.num { text-align: right; }
+        tr.new { background: #fff6d6; }
+    </style>
+</head>
+<body>
+    <h1>Recipe Database</h1>
+    <h2>Recipe table</h2>
+    <p>Rows from the Recipe table in recipe_db. Times are in minutes; temperatures in °F.</p>
+
+    <table>
+        <caption>Recipes</caption>
+        <thead>
+            <tr>
+                <th>Recipe</th>
+                <th>Category</th>
+                <th>Prep time (min)</th>
+                <th>Bake time (min)</th>
+                <th>Oven temp (°F)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Chocolate chip cookies</td>
+                <td>cookie</td>
+                <td class="num">20</td>
+                <td class="num">11</td>
+                <td class="num">375</td>
+            </tr>
+            <tr>
+                <td>Sandwich bread</td>
+                <td>bread</td>
+                <td class="num">30</td>
+                <td class="num">35</td>
+                <td class="num">375</td>
+            </tr>
+            <tr>
+                <td>Vanilla pound cake</td>
+                <td>cake</td>
+                <td class="num">25</td>
+                <td class="num">60</td>
+                <td class="num">325</td>
+            </tr>
+            {% if new_recipe %}
+            <tr class="new">
+                <td>{{ new_recipe.name }}</td>
+                <td>{{ new_recipe.category }}</td>
+                <td class="num">{{ new_recipe.prep_time }}</td>
+                <td class="num">{{ new_recipe.bake_time }}</td>
+                <td class="num">{{ new_recipe.oven_temp }}</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <p><a href="/">Add another recipe</a></p>
+</body>
+</html>

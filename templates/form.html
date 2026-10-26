@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe Database - Add a Recipe</title>
+    <style>
+        body { font-family: sans-serif; margin: 2em; }
+        form { display: grid; grid-template-columns: max-content 16em; gap: 0.6em 1em; align-items: center; }
+        label { font-weight: bold; }
+        input { padding: 0.3em; }
+        button { grid-column: 2; justify-self: start; padding: 0.4em 1.2em; }
+    </style>
+</head>
+<body>
+    <h1>Recipe Database</h1>
+    <h2>Add a recipe</h2>
+    <p>Submit the form to show your recipe as a new row in the recipe table.</p>
+
+    <form action="/recipes" method="get">
+        <label for="name">Recipe</label>
+        <input type="text" id="name" name="name" maxlength="100" required>
+
+        <label for="category">Category</label>
+        <input type="text" id="category" name="category" maxlength="50" required>
+
+        <label for="prep_time">Prep time (min)</label>
+        <input type="number" id="prep_time" name="prep_time" min="0" required>
+
+        <label for="bake_time">Bake time (min)</label>
+        <input type="number" id="bake_time" name="bake_time" min="0" required>
+
+        <label for="oven_temp">Oven temp (°F)</label>
+        <input type="number" id="oven_temp" name="oven_temp" min="0" required>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
