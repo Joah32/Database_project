@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Ingredients{% endblock %}
+
+{% block header %}
+Recipe Database Ingredients
+{% endblock %}
+
+{% block content %}
+
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Category</th>
+    <th>Base Unit</th>
+    <th>Contains Gluten</th>
+  </tr>
+  {% for row in collection %}
+  <tr>
+    <td>{{row[0]}}</td>
+    <td>{{row[1]}}</td>
+    <td>{{row[2]}}</td>
+    <td>{{row[3]}}</td>
+    <td>{{ 'Yes' if row[4] else 'No' }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<h2>Add a new ingredient</h2>
+<form action="">
+  Name: <input type="text" name="name" /><br />
+  Category: <input type="text" name="category" /><br />
+  Base Unit:
+  <select name="base_unit">
+    <option value="g" selected>weight (g)</option>
+    <option value="ml">volume (ml)</option>
+  </select><br />
+  Contains Gluten: <input type="checkbox" name="contains_gluten" value="1" /><br />
+  <input type="submit" value="Submit">
+</form>
+{% endblock %}
