@@ -1,0 +1,25 @@
+w{% extends 'base.html' %}
+
+{% block title %}Update Ingredient{% endblock %}
+
+{% block header %}
+Updating Ingredient {{id}}
+{% endblock %}
+
+{% block content %}
+
+<h2>Enter the new values here</h2>
+<form action="">
+  <input type="hidden" name="id" value="{{id}}">
+  Name: <input type="text" name="name" value="{{existingName}}" /><br />
+  Category: <input type="text" name="category" value="{{existingCategory}}" /><br />
+  Base Unit:
+  <select name="base_unit">
+    <option value="g" {% if existingUnit == 'g' %}selected{% endif %}>weight (g)</option>
+    <option value="ml" {% if existingUnit == 'ml' %}selected{% endif %}>volume (ml)</option>
+  </select><br />
+  Contains Gluten: <input type="checkbox" name="contains_gluten" value="1" {% if existingGluten %}checked{% endif %} /><br />
+  <input type="submit" value="Submit">
+</form>
+<a href="/">Return to list</a>
+{% endblock %}

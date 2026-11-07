@@ -15,6 +15,7 @@ Recipe Database Ingredients
     <th>Category</th>
     <th>Base Unit</th>
     <th>Contains Gluten</th>
+    <th>Maintenance</th>
   </tr>
   {% for row in collection %}
   <tr>
@@ -23,6 +24,10 @@ Recipe Database Ingredients
     <td>{{row[2]}}</td>
     <td>{{row[3]}}</td>
     <td>{{ 'Yes' if row[4] else 'No' }}</td>
+    <td>
+      <a href="?delete=true&id={{row[0]}}">Delete</a><br />
+      <a href="/updateIngredient?id={{row[0]}}">Change</a>
+    </td>
   </tr>
   {% endfor %}
 </table>
