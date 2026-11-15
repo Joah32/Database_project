@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Recipes{% endblock %}
+
+{% block header %}
+{{ pageTitle }}
+{% endblock %}
+
+{% block content %}
+
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Recipe Name</th>
+    <th>Category</th>
+    <th>Ingredients</th>
+  </tr>
+  {% for row in collection %}
+  <tr>
+    <td>{{row[0]}}</td>
+    <td>{{row[1]}}</td>
+    <td>{{row[2]}}</td>
+    <td><a href="{{ url_for('recipeIngredients', recipe_id=row[0]) }}">View Ingredients</a></td>
+  </tr>
+  {% else %}
+  <tr>
+    <td colspan="4">No recipes found.</td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% if ingredient and otherRecipes %}
+<h2>Add {{ ingredient[1] }} to another recipe</h2>
+<form method="post" action="{{ url_for('addLink') }}">
+  <select name="recipe_id" required>
+    <option value="" disabled selected>Choose a recipe</option>
+    {% for other in otherRecipes %}
+    <option value="{{ other[0] }}">{{ other[1] }}</option>
+    {% endfor %}
+  </select>
+  <input type="hidden" name="ingredient_id" value="{{ ingredient[0] }}" />
+  <input type="hidden" name="from" value="ingredient" />
+  <input type="submit" value="Add to recipe">
+</form>
+{% endif %}
+
+{% endblock %}

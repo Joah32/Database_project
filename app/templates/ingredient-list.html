@@ -16,6 +16,7 @@ Recipe Database Ingredients
     <th>Base Unit</th>
     <th>Contains Gluten</th>
     <th>Maintenance</th>
+    <th>Recipes</th>
   </tr>
   {% for row in collection %}
   <tr>
@@ -28,6 +29,7 @@ Recipe Database Ingredients
       <a href="?delete=true&id={{row[0]}}">Delete</a><br />
       <a href="/updateIngredient?id={{row[0]}}">Change</a>
     </td>
+    <td><a href="{{ url_for('showRecipes', ingredient_id=row[0]) }}">View Recipes</a></td>
   </tr>
   {% endfor %}
 </table>
